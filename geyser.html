@@ -53,7 +53,7 @@
       height: 15em;
     }
     .surface {
-      background-image: url(grass.svg);
+      background-image: url(media/grass.svg);
       background-repeat: repeat-x;
       background-size: auto 2em;
       background-position: bottom;
@@ -77,7 +77,7 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
-      background-image: url(tunnel.svg);
+      background-image: url(media/tunnel.svg);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right;
@@ -286,17 +286,24 @@
 
     <h1>Old Faithful Geyser</h1>
 
-    <img src="old-faithful.jpg" alt="Old Faithful Geyser, in Yellowstone National Park" width="800" height="600" />
+    <img src="media/old-faithful.jpg" alt="Old Faithful Geyser, in Yellowstone National Park" width="800" height="600" />
 
     <p>A geyser is a rare natural phenomenon where heated water from deep below the surface of the earth races to a vent on the surface and errupts in a bubbly show of water and steam. Geysers may errupt at regular time intervals. Old Faithful, located in <a href="https://en.wikipedia.org/wiki/Yellowstone_National_Park">Yellowstone National Park</a>, errupts every 35 to 120 minutes.</p>
 
     <p>Learn more about geysers on <a href="https://en.wikipedia.org/wiki/Geyser">Wikipedia</a></p>
 
+    <audio controls="controls" preload="metadata">
+      <source src="media/old-faithful.mp3" type="audio/mpeg" />
+      <p class="message"><a href="old-faithful.mp3">Download audio file</a></p>
+    </audio>
+
+    <p>This is a composite recording of Old Faithful: five different stereo recording set-ups of the same eruption event. More audio file are available from the <a href="https://www.nps.gov/yell/learn/photosmultimedia/sounds-oldfaithful.htm">National Park Service</a>.</p>
+
   </div>
 
   <figure>
 
-    <img class="sun" src="sun.svg" width="388" height="382" alt="" />
+    <img class="sun" src="media/sun.svg" width="388" height="382" alt="" />
 
     <div class="steam">
       <span class="s0"></span>
@@ -312,12 +319,12 @@
     </div>
 
     <!--
-    <img class="steam" src="steam.svg" width="912" height="342" alt="" />
+    <img class="steam" src="media/steam.svg" width="912" height="342" alt="" />
     -->
     <p class="steam-label">A fountain of hot water and steam errupts about once per hour.</p>
 
     <div class="surface">
-      <img class="surface" src="ground.svg" width="678" height="93" alt="" />
+      <img class="surface" src="media/ground.svg" width="678" height="93" alt="" />
     </div>
 
     <div class="underground">
@@ -338,10 +345,10 @@
 
       <p>A reservoir of water collects at the bottom.</p>
 
-      <img class="hot-rocks" src="hot-rocks.svg" width="266" height="93" alt="" />
+      <img class="hot-rocks" src="media/hot-rocks.svg" width="266" height="93" alt="" />
 
       <p>Hot rocks heat up the water until it boils.</p>
-      <img class="magma" src="magma.svg" width="1003" height="153" alt="" />
+      <img class="magma" src="media/magma.svg" width="1003" height="153" alt="" />
 
       <!--
 
@@ -355,22 +362,30 @@
   <script>
 
   var figure = document.querySelector('figure');
+  var audio = document.querySelector('audio');
 
   var errupting = false;
+
   function errupt() {
     if (errupting) return;
 
     // Show the steam animation
     if (figure.className.indexOf('active') < 0) figure.className += ' active';
 
-    // Bonus Points: Play audio
+    // Play audio
+   	audio.play();
 
     // Stop the erruption after a delay
-    setTimeout(stop, 30000); // 30 seconds
+    setTimeout(stopErruption, 30000); // 30 seconds
   }
 
-  function stop() {
+  function stopErruption() {
+
+  	// Stop the animation
     figure.className = figure.className.replace(/active/g, '');
+
+    // Stop the audio
+    audio.pause();
   }
 
   // At a random interval between 35 and 91 minutes, errupt automatically.
