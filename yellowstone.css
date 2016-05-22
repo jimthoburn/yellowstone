@@ -28,26 +28,292 @@
     margin-bottom: 2.4em;
   }
 
-  @keyframes tossing {
-    0% {
-      transform: rotate(-4deg); 
-    }
-    50% {
-      transform: rotate(4deg);
-    }
-    100% {
-      transform: rotate(-4deg); 
-    }
+
+  /*
+    Old Faithful
+  */
+
+  figure {
+    background-color: rgb(178, 209, 214);
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    padding-top: 5em;
+    min-width: 700px;
   }
 
-  #ship {
+  figure p {
+    position: absolute;
+    background: white;
+    padding: 0.375em 0.75em;
+    max-width: 10em;
+    left: 20%;
+    z-index: 2;
+  }
+  .tunnel p.geyserite {
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, 0);
+  }
+  .tunnel p.reservoir {
+    bottom: 0;
+    left: 0;
+    transform: translate(-100%, 0);
+  }
+  .surface {
+    position: relative;
+  }
+  .surface p {
+    bottom: 0;
+    left: 50%;
+    left: calc(50% - 15em);
+    transform: translate(-100%, 0);
+  }
+
+  .pressure {
+    right: 20%;
+    left: auto;
+    transform: translate(0, -150%);
+  }
+  .temperature {
+    right: 20%;
+    left: auto;
+  }
+
+  .steam {
     display: block;
-    margin-top: 2.4em;
     margin-left: auto;
     margin-right: auto;
-
-    animation-name: tossing;
-    animation-duration: 2.5s; 
-    animation-iteration-count: infinite;
+    opacity: 0;
+    transition: opacity 1s;
   }
-  
+  .active .steam {
+    opacity: 1;
+  }
+
+  .sun {
+    position: absolute;
+    top: -4.5em;
+    right: -4.5em;
+    width: 15em;
+    height: 15em;
+  }
+  .surface {
+    background-image: url(media/grass.svg);
+    background-repeat: repeat-x;
+    background-size: auto 2em;
+    background-position: bottom;
+    background-position: 50% calc(100% - 1px);
+    padding-left: 1em;
+  }
+  .surface img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -1px;
+  }
+
+  .underground {
+    background-color: rgb(99, 59, 43);
+    padding-top: 1px;
+  }
+
+  .tunnel {
+    margin-top: -4em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url(media/tunnel.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    width: 290px;
+    height: 800px;
+    position: relative;
+    padding-left: 1em;
+  }
+
+  .hot-rocks {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2em;
+    margin-bottom: -1.5em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .magma {
+    width: 100%;
+    height: auto;
+  }
+
+
+  /*
+  Animate the bubbles
+  http://stackoverflow.com/questions/13953053/animate-bubbles-upwards-continuously-with-css3#answer-13953712
+  */
+
+  .bubbles {
+    position: relative;
+    overflow: hidden;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+
+  .bubble {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+  }
+
+  .x1 {
+      transform: scale(0.9);
+      opacity: 0.2;
+      animation: movebubbles 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
+  }
+
+  .x2 {
+      left: 20%;
+      transform: scale(0.6);
+      opacity: 0.5;
+      animation: movebubbles 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
+  }
+  .x3 {
+      left: 35%;
+      transform: scale(0.8);
+      opacity: 0.3;
+      animation: movebubbles 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+  }
+  .x4 {
+      left: 47%;
+      transform: scale(0.75);
+      opacity: 0.35;
+      animation: movebubbles 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
+  }
+  .x5 {
+      left: 15%;
+      transform: scale(0.8);
+      opacity: 0.3; 
+      animation: movebubbles 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
+  }
+  @keyframes movebubbles { 
+      0% { 
+          top: 100%;
+      }
+      100% { 
+          top: 0;
+      }
+  }
+
+  @keyframes sideWays { 
+      0% { 
+          margin-left: 0px;
+      }
+      100% { 
+          margin-left: 25%;
+      }
+  }
+
+  /*
+    Steam animation
+    KUDOS: http://codepen.io/verlok/pen/nLsdB
+  */
+
+  /* steam container */
+  .steam {
+    position: relative;
+    width: 1px;
+    height: 350px;
+  }
+
+  /* steam balls */
+  .steam span {
+    display: block;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    margin-left: -20px;
+    height: 0px;
+    width: 0px;
+    border: 35px solid white;
+    border-radius: 35px;
+    left: -14px;
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  /* steam animation */
+  @keyframes steam-left {
+    0% {
+      transform: scale(0.2) translate(0, 0);
+    }
+    10% {
+      opacity: 1;
+      transform: scale(0.2) translate(0, -5px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1) translate(-20px, -130px);
+    }
+  }
+  @keyframes steam-right {
+    0% {
+      transform: scale(0.2) translate(0, 0);
+    }
+    10% {
+      opacity: 1;
+      transform: scale(0.2) translate(0, -5px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1) translate(20px, -130px);
+    }
+  }
+  .steam .s0 {
+    animation: steam-left 10s 0s infinite;
+  }
+
+  .steam .s1 {
+    animation: steam-right 10s 1s infinite;
+  }
+
+  .steam .s2 {
+    animation: steam-left 10s 2s infinite;
+  }
+
+  .steam .s3 {
+    animation: steam-right 10s 3s infinite;
+  }
+
+  .steam .s4 {
+    animation: steam-left 10s 4s infinite;
+  }
+
+  .steam .s5 {
+    animation: steam-right 10s 5s infinite;
+  }
+
+  .steam .s6 {
+    animation: steam-left 10s 6s infinite;
+  }
+
+  .steam .s7 {
+    animation: steam-right 10s 7s infinite;
+  }
+
+  .steam .s8 {
+    animation: steam-left 10s 8s infinite;
+  }
+
+  .steam .s9 {
+    animation: steam-right 10s 9s infinite;
+  }
+
