@@ -35,6 +35,7 @@
   }
 
   function isBoiling() {
+    // http://www.engineeringtoolbox.com/boiling-point-water-d_926.html
     return temperature >= 285;
   }
 
@@ -60,6 +61,10 @@
     } else {
       stopErruption();
     }
+
+    // TODO: Increase the temperature beyond the boiling point before errupting
+    //       and then slowly decrease the temperature during the erruption
+
   }, 1000); // 1 second
 
   // If the user presses the tunnel, the rocks, or the magma, increase the temperature by ten degrees.
