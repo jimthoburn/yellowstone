@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>Old Faithful Geyser, in Yellowstone National Park</title>
+  <link href="yellowstone.css" rel="stylesheet" />
+
+  <style>
+    /*
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: -1;
+    }
+    */
+
+    figure {
+      background-color: rgb(178, 209, 214);
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      padding-top: 5em;
+      min-width: 700px;
+    }
+
+    figure p {
+      position: absolute;
+      background: white;
+      padding: 0.375em 0.75em;
+      max-width: 10em;
+    }
+
+    .steam {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    .active .steam {
+      opacity: 1;
+    }
+
+    .sun {
+      position: absolute;
+      top: -4.5em;
+      right: -4.5em;
+      width: 15em;
+      height: 15em;
+    }
+    .surface {
+      background-image: url(grass.svg);
+      background-repeat: repeat-x;
+      background-size: auto 2em;
+      background-position: bottom;
+      background-position: 50% calc(100% - 1px);
+      padding-left: 1em;
+    }
+    .surface img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: -1px;
+    }
+
+    .underground {
+      background-color: rgb(99, 59, 43);
+      padding-top: 1px;
+    }
+
+    .tunnel {
+      margin-top: -4em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-image: url(tunnel.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: right;
+      width: 290px;
+      height: 800px;
+      position: relative;
+      padding-left: 1em;
+    }
+
+    .hot-rocks {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2em;
+      margin-bottom: -1.5em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .magma {
+      width: 100%;
+      height: auto;
+    }
+
+  </style>
+
+  <style>
+
+    /*
+    Animate the bubbles
+    http://stackoverflow.com/questions/13953053/animate-bubbles-upwards-continuously-with-css3#answer-13953712
+    */
+
+    .bubbles {
+      position: relative;
+      overflow: hidden;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+
+    .bubble {
+        width: 30px;
+        height: 30px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .x1 {
+        transform: scale(0.9);
+        opacity: 0.2;
+        animation: movebubbles 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
+    }
+
+    .x2 {
+        left: 20%;
+        transform: scale(0.6);
+        opacity: 0.5;
+        animation: movebubbles 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
+    }
+    .x3 {
+        left: 35%;
+        transform: scale(0.8);
+        opacity: 0.3;
+        animation: movebubbles 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+    }
+    .x4 {
+        left: 47%;
+        transform: scale(0.75);
+        opacity: 0.35;
+        animation: movebubbles 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
+    }
+    .x5 {
+        left: 15%;
+        transform: scale(0.8);
+        opacity: 0.3; 
+        animation: movebubbles 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
+    }
+    @keyframes movebubbles { 
+        0% { 
+            top: 100%;
+        }
+        100% { 
+            top: 0;
+        }
+    }
+
+    @keyframes sideWays { 
+        0% { 
+            margin-left: 0px;
+        }
+        100% { 
+            margin-left: 25%;
+        }
+    }
+
+  </style>
+
+  <style>
+
+    /*
+      Steam animation
+      KUDOS: http://codepen.io/verlok/pen/nLsdB
+    */
+
+    /* steam container */
+    .steam {
+      position: relative;
+      width: 1px;
+      height: 350px;
+    }
+
+    /* steam balls */
+    .steam span {
+      display: block;
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      margin-left: -20px;
+      height: 0px;
+      width: 0px;
+      border: 35px solid white;
+      border-radius: 35px;
+      left: -14px;
+      opacity: 0;
+      transform: scale(0.2);
+    }
+
+    /* steam animation */
+    @keyframes steam-left {
+      0% {
+        transform: scale(0.2) translate(0, 0);
+      }
+      10% {
+        opacity: 1;
+        transform: scale(0.2) translate(0, -5px);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1) translate(-20px, -130px);
+      }
+    }
+    @keyframes steam-right {
+      0% {
+        transform: scale(0.2) translate(0, 0);
+      }
+      10% {
+        opacity: 1;
+        transform: scale(0.2) translate(0, -5px);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1) translate(20px, -130px);
+      }
+    }
+    .steam .s0 {
+      animation: steam-left 10s 0s infinite;
+    }
+
+    .steam .s1 {
+      animation: steam-right 10s 1s infinite;
+    }
+
+    .steam .s2 {
+      animation: steam-left 10s 2s infinite;
+    }
+
+    .steam .s3 {
+      animation: steam-right 10s 3s infinite;
+    }
+
+    .steam .s4 {
+      animation: steam-left 10s 4s infinite;
+    }
+
+    .steam .s5 {
+      animation: steam-right 10s 5s infinite;
+    }
+
+    .steam .s6 {
+      animation: steam-left 10s 6s infinite;
+    }
+
+    .steam .s7 {
+      animation: steam-right 10s 7s infinite;
+    }
+
+    .steam .s8 {
+      animation: steam-left 10s 8s infinite;
+    }
+
+    .steam .s9 {
+      animation: steam-right 10s 9s infinite;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div>
+
+    <h1>Old Faithful Geyser</h1>
+
+    <img src="old-faithful.jpg" alt="Old Faithful Geyser, in Yellowstone National Park" width="800" height="600" />
+
+    <p>A geyser is a rare natural phenomenon where heated water from deep below the surface of the earth races to a vent on the surface and errupts in a bubbly show of water and steam. Geysers may errupt at regular time intervals. Old Faithful, located in <a href="https://en.wikipedia.org/wiki/Yellowstone_National_Park">Yellowstone National Park</a>, errupts every 35 to 120 minutes.</p>
+
+    <p>Learn more about geysers on <a href="https://en.wikipedia.org/wiki/Geyser">Wikipedia</a></p>
+
+  </div>
+
+  <figure>
+
+    <img class="sun" src="sun.svg" width="388" height="382" alt="" />
+
+    <div class="steam">
+      <span class="s0"></span>
+      <span class="s1"></span>
+      <span class="s2"></span>
+      <span class="s3"></span>
+      <span class="s4"></span>
+      <span class="s5"></span>
+      <span class="s6"></span>
+      <span class="s7"></span>
+      <span class="s8"></span>
+      <span class="s9"></span>
+    </div>
+
+    <!--
+    <img class="steam" src="steam.svg" width="912" height="342" alt="" />
+    -->
+    <p class="steam-label">A fountain of hot water and steam errupts about once per hour.</p>
+
+    <div class="surface">
+      <img class="surface" src="ground.svg" width="678" height="93" alt="" />
+    </div>
+
+    <div class="underground">
+
+      <div class="tunnel">
+        <div class="bubbles">
+          <div class="bubble x1"></div>
+          <div class="bubble x2"></div>
+          <div class="bubble x3"></div>
+          <div class="bubble x4"></div>
+          <div class="bubble x5"></div>
+        </div>
+      </div>
+
+      <!--
+      <p>A mineral called geyserite makes the tunnel water-tight.</p>
+      -->
+
+      <p>A reservoir of water collects at the bottom.</p>
+
+      <img class="hot-rocks" src="hot-rocks.svg" width="266" height="93" alt="" />
+
+      <p>Hot rocks heat up the water until it boils.</p>
+      <img class="magma" src="magma.svg" width="1003" height="153" alt="" />
+
+      <!--
+
+      <p>The cooler water above pushes down on the water below.</p>
+      <p>Bubbles from the warmer water below travel up to the surface.</p>
+      -->
+    </div>
+
+  </figure>
+
+  <script>
+
+  var figure = document.querySelector('figure');
+
+  var errupting = false;
+  function errupt() {
+    if (errupting) return;
+
+    // Show the steam animation
+    if (figure.className.indexOf('active') < 0) figure.className += ' active';
+
+    // Bonus Points: Play audio
+
+    // Stop the erruption after a delay
+    setTimeout(stop, 30000); // 30 seconds
+  }
+
+  function stop() {
+    figure.className = figure.className.replace(/active/g, '');
+  }
+
+  // At a random interval between 35 and 91 minutes, errupt automatically.
+  setTimeout(errupt, 30000); // 30 seconds
+
+  // If the user presses the tunnel, the rocks, or the magma, start the erruption.
+  figure.addEventListener('click', errupt, false);
+
+  // Bonus Points: Only start the erruption if the user presses repeatedly and keeps pressing until the erruption has started.
+
+  </script>
+
+</body>
+</html>
