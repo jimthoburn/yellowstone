@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>Old Faithful Geyser, in Yellowstone National Park</title>
+
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      background-image: url(media/old-faithful.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    .about {
+      max-width: 50em;
+      padding: 3em;
+      background-color: white;
+      background-color: rgba(255, 255, 255, 0.75);
+    }
+    .about p {
+      max-width: 33em;
+    }
+    h1 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="about">
+  <h1>Old Faithful Geyser, in Yellowstone National Park</h1>
+
+  <p>A geyser is a rare natural phenomenon where heated water from deep below the surface of the earth races to a vent on the surface and errupts in a bubbly show of water and steam. Geysers may errupt at regular time intervals. Old Faithful, located in <a href="https://en.wikipedia.org/wiki/Yellowstone_National_Park">Yellowstone National Park</a>, errupts every 35 to 120 minutes.</p>
+
+  <p>Learn more about geysers on <a href="https://en.wikipedia.org/wiki/Geyser">Wikipedia</a></p>
+
+  <audio src="media/old-faithful.mp3" controls="controls">
+    <p><a href="media/old-faithful.mp3">Download audio file</a></p>
+  </audio>
+
+  <p>This is a composite recording of Old Faithful: five different stereo recording set-ups of the same eruption event. More audio files are available from the <a href="https://www.nps.gov/yell/learn/photosmultimedia/sounds-oldfaithful.htm">National Park Service</a>.</p>
+</div>
+
+<script src="lib/d3.v3.min.js"></script>
+
+<script>
+
+// KUDOS: https://www.bignerdranch.com/blog/music-visualization-with-d3-js/
+
+// Audio Context
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // Safari needs a vendor prefix
+var audioElement = document.querySelector('audio');
+var audioSrc = audioCtx.createMediaElementSource(audioElement);
+
+// Analyser
+var analyser = audioCtx.createAnalyser();
+audioSrc.connect(analyser);
+audioSrc.connect(audioCtx.destination);
+
+// Frequency Data
+var frequencyData = new Uint8Array(100);
+
+// SVG Container
+var svgHeight = 300;
+var svgWidth = window.innerWidth;
+var svg = d3.select('body').append('svg');
+svg.attr('height', svgHeight);
+svg.attr('width', svgWidth);
+
+// Rectangles
+var barPadding = 1;
+svg.selectAll('rect')
+  .data(frequencyData)
+  .enter()
+  .append('rect')
+  .attr('x', function (data, index) {
+    return index * (svgWidth / frequencyData.length);
+  })
+  .attr('width', (svgWidth / frequencyData.length) - barPadding);
+
+// Animation Loop
+function renderChart() {
+  requestAnimationFrame(renderChart);
+
+  analyser.getByteFrequencyData(frequencyData);
+
+  svg.selectAll('rect')
+    .data(frequencyData)
+    .attr('y', function(d) {
+      return svgHeight - d;
+    })
+    .attr('height', function(d) {
+      return d;
+    })
+    .attr('x', function (data, index) {
+      return index * (svgWidth / frequencyData.length);
+    })
+    .attr('width', (svgWidth / frequencyData.length) - barPadding)
+    .attr('fill', function(d) {
+      return 'rgba(101, 152, ' + d + ', 0.75)';
+    });
+}
+renderChart();
+
+window.addEventListener('resize', function() {
+  svgWidth = window.innerWidth;
+  svg.attr('width', svgWidth);
+}, false);
+
+</script>
+
+</body>
+</html>

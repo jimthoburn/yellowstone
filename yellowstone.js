@@ -7,6 +7,21 @@
   var errupting = false;
   var temperature = 0;
 
+  var audioContext = new (window.AudioContext || window.webkitAudioContext)(); // Safari needs a vendor prefix
+
+  var audioElement = document.getElementById('audioElement');
+
+  var audioSource = audioContext.createMediaElementSource(audioElement);
+
+  var analyser = audioContext.createAnalyser();
+
+  // Bind our analyser to the media element source.
+  audioSource.connect(analyser);
+  audioSource.connect(audioContext.destination);
+
+  var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+
   function errupt() {
     if (errupting) return;
 
