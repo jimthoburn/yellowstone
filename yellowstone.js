@@ -9,7 +9,7 @@
 
   var audioContext = new (window.AudioContext || window.webkitAudioContext)(); // Safari needs a vendor prefix
 
-  var audioElement = document.getElementById('audioElement');
+  var audioElement = document.querySelector('audio');
 
   var audioSource = audioContext.createMediaElementSource(audioElement);
 
